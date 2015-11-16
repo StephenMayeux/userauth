@@ -2,16 +2,17 @@ var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
+var expressValidator = require('express-validator');
 var cookieParser = require('cookie-parser');
-var session = require("express-session");
-var expressValidator = require("express-validator");
-var passport = require("passport");
-var localStrategy = require("passport-local").Strategy;
+var session = require('express-session');
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var bodyParser = require('body-parser');
-var multer = require("multer");
-var flash = require("connect-flash");
-var mongo = require("mongodb");
-var mongoose = require("mongoose");
+var multer = require('multer');
+var upload = multer({dest: './public/images/uploads'});
+var flash = require('connect-flash');
+var mongo = require('mongodb');
+var mongoose = require('mongoose');
 var db = mongoose.connection;
 
 
@@ -24,27 +25,27 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// handle file uploads
-app.use(multer({dest: './uploads'}));
+// Handle File Uploads
+app.use(upload.single('avatar'));
 
 // uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// handle express sessions
+//Handle Express Sessions
 app.use(session({
-  secret: 'secret',
+  secret:'secret',
   saveUninitialized: true,
-  resave: true
+  resave:true
 }));
 
-// Passport Session middleware always comes after express session middleware
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// validator
+// Validator
 app.use(expressValidator({
   errorFormatter: function(param, msg, value) {
       var namespace = param.split('.')
@@ -66,8 +67,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(flash());
-app.use(function(req, res, next) {
-  res.locals.messages = require("express-messages")(req, res);
+app.use(function (req, res, next) {
+  res.locals.messages = require('express-messages')(req, res);
   next();
 });
 
