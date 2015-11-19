@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var User = require('../models/user'); // models are uppercase and singular
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
