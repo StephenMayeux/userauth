@@ -18,13 +18,15 @@ html
           ul.nav.navbar-nav
             li(class=(title == 'Members' ? 'active' : ''))
               a(href='/') Members
-            li(class=(title == 'Register' ? 'active' : ''))
-              a(href='/users/register') Register
-            li(class=(title == 'Login' ? 'active' : ''))
-              a(href='users/login') Login
-          ul.nav.navbar-nav.navbar-right
-            li
-              a(href='/users/logout') Logout
+            if !user // if not logged in will only show register/login for menu
+              li(class=(title == 'Register' ? 'active' : ''))
+                a(href='/users/register') Register
+              li(class=(title == 'Login' ? 'active' : ''))
+                a(href='users/login') Login
+          ul.nav.navbar-nav.navbar-right 
+            if user // if signed in only see logout
+              li
+                a(href='/users/logout') Logout
     .container
       != messages()
       block content

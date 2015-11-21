@@ -72,6 +72,11 @@ app.use(function (req, res, next) {
   next();
 });
 
+app.get('*', function(req, res, next) { // asterick applies to all views
+  res.locals.user = req.user || null; // locals is a var accessible for all views
+  next();
+});
+
 app.use('/', routes);
 app.use('/users', users);
 
