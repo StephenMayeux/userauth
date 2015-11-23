@@ -9,7 +9,6 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var bodyParser = require('body-parser');
 var multer = require('multer');
-var upload = multer({dest: './public/images/uploads'});
 var flash = require('connect-flash');
 var mongo = require('mongodb');
 var mongoose = require('mongoose');
@@ -26,7 +25,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 // Handle File Uploads
-app.use(upload.single('avatar'));
+app.use(multer({ dest: './public/images/uploads'})); 
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));

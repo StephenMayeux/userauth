@@ -30,7 +30,7 @@ router.post('/register', function(req, res, next) {
   var password2 = req.body.password2;
   
     // check the image field
- if(req.body.profileimage) {
+ if(req.files.profileimage) {
     console.log('uploading file');
     
     var profileImageOriginalName = req.files.profileimage.originalname;
