@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt = require("bcrypt");
-mongoose.connect('mongodb://localhost/nodeauth');
+mongoose.connect(process.env.MONGOLAB_URI);
 var db = mongoose.connection;
 
 // user schema
